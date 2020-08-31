@@ -32,7 +32,7 @@ client.on("message", async message => {
     if (!message.content.match(mention)) return;
     if (settings.adminOnly && message.author.id !== settings.adminID) return message.channel.send("Admin only mode is on. Ask your system administrator to turn it off.");
     
-    let { existsSync, mkdirSync, readdirSync } = require('fs');
+    let { existsSync, mkdirSync, readdirSync, readFileSync } = require('fs');
     
     // Filesystem check
     if(!existsSync(fsDirs.bin)) await mkdirSync(fsDirs.bin);
@@ -51,6 +51,9 @@ client.on("message", async message => {
         let autorun = await readdirSync(fsDirs.user.local.autorun);
         try {
             autorun = autorun.forEach(file => {
+                let i = readFileSync(file).toString().trim().split(" ")[0];
+                if(settings.forbiddencmds.includes(i) || i == ["ls", "cat", "grep", "cp", "mv"] && x.startsWith("/") || i == ["cp", "mv"] && y.startsWith("/")) return message.channel.send(`\`\`\`File ${file} contains forbidden commands`);
+                
                 require('child_process').exec(`sh ${fsDirs.user.local.autorun}${sep}${file}`, async function(err, stdout, stderr) {
                 if(err) return message.channel.send(`\`\`\`${stderr}\`\`\``);
                 await message.channel.send(stdout);
@@ -177,6 +180,8 @@ client.on("message", async message => {
                     if(!args[0]) return message.channel.send("Provide a file");
                     if(args[0].startsWith("/") || windowsDrives.test(args[0]) || currentuserdirectory == fsDirs.home && args[0].startsWith("..")) return message.channel.send("Action blocked");
                     let command = `${currentuserdirectory}${sep}${args[0]}`;
+                    let i = readFileSync(command).toString().trim().split(" ")[0];
+                    if(settings.forbiddencmds.includes(i)) return message.channel.send(`\`\`\`File ${command} contains forbidden commands`);
                     
                     exec(`sh ${command}`, function(err, stdout, stderr) {
                         if(err) return message.channel.send(`\`\`\`${stderr}\`\`\``);
@@ -268,6 +273,9 @@ client.on("message", async message => {
                     };
                     
                     try {
+                        let i = readFileSync(command).toString().trim().split(" ")[0];
+                        if(settings.forbiddencmds.includes(i)) return message.channel.send(`\`\`\`File ${command} contains forbidden commands`);
+
                         let { exec } = require('child_process');
                         await exec(`sh ${command}`, function(err, stdout, stderr) {
                             if(err) return message.channel.send(`\`\`\`${stderr}\`\`\``);

@@ -1,5 +1,6 @@
 {
     "token": "[YOUR BOT TOKEN]",
     "adminID": "[YOUR USER ID]",
-    "adminOnly": false
+    "adminOnly": false,
+    "forbiddencmds": ["node", "pm2", "while", "eval", "fg", "sudo", "kill", ":(){:|:&};:", "dd", "pkill", "bg", "at", "atq", "awk", "batch", "alias", "unalias", "ls", "cat", "cp", "mv", "chmod"]
 }

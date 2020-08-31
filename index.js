@@ -5,9 +5,12 @@ client.on("ready", () => {
     console.log("start");
 });
 
+// Load system settings
+const settings = require('./settings.json');
+
 client.on("message", async message => {
     if(message.author.bot) return;
-
+    
     // Filesystem dir shortcuts
     let { sep } = require('path');
     let fsDirs = {
@@ -27,8 +30,9 @@ client.on("message", async message => {
     // Mention the bot to start system
     const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
     if (!message.content.match(mention)) return;
+    if (settings.adminOnly && message.author.id !== settings.adminID) return message.channel.send("Admin only mode is on. Ask your system administrator to turn it off.");
     
-    let { existsSync, mkdirSync, readdirSync, readFileSync } = require('fs');
+    let { existsSync, mkdirSync, readdirSync } = require('fs');
     
     // Filesystem check
     if(!existsSync(fsDirs.bin)) await mkdirSync(fsDirs.bin);
@@ -281,4 +285,4 @@ client.on("message", async message => {
     });
 });
 
-client.login("[YOUR BOT TOKEN]");
+client.login(settings.token);

@@ -1,0 +1,19 @@
+{
+  "name": "discord-bash",
+  "version": "1.0.0",
+  "description": "A stable version of Discord-Bash",
+  "main": "index.js",
+  "author": "Cyber#7159",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CyberL1/Discord-Bash.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CyberL1/Discord-Bash/issues"
+  },
+  "homepage": "https://github.com/CyberL1/Discord-Bash#readme"
+}

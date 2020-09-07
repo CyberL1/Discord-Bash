@@ -52,7 +52,7 @@ client.on("message", async message => {
         try {
             autorun = autorun.forEach(file => {
                 let i = readFileSync(file).toString().trim().split(" ")[0];
-                if(settings.forbiddencmds.includes(i) || i == ["ls", "cat", "grep", "cp", "mv"] && x.startsWith("/") || i == ["cp", "mv"] && y.startsWith("/")) return message.channel.send(`\`\`\`File ${file} contains forbidden commands`);
+                if(settings.forbiddencmds.includes(i)) return message.channel.send(`\`\`\`File ${file} contains forbidden commands`);
                 
                 require('child_process').exec(`sh ${fsDirs.user.local.autorun}${sep}${file}`, async function(err, stdout, stderr) {
                 if(err) return message.channel.send(`\`\`\`${stderr}\`\`\``);

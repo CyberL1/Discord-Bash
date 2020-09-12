@@ -1,3 +1,6 @@
+// Platform check
+if(require("os").platform() == "win32") console.warn("Windows is not supported by Discord-Bash, some commands will not work.");
+
 const Discord = require("discord.js");
 const client = new Discord.Client();
 

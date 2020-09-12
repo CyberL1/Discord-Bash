@@ -3,6 +3,7 @@ const client = new Discord.Client();
 
 client.on("ready", () => {
     console.log("start");
+    client.user.setActivity("Mention me");
 });
 
 // Load system settings

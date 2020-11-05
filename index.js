@@ -55,7 +55,7 @@ client.on("message", async message => {
         let autorun = await readdirSync(fsDirs.user.local.autorun);
         try {
             autorun = autorun.forEach(file => {
-                let i = readFileSync(file).toString().trim().split(" ")[0];
+                let i = readFileSync(`${fsDirs.user.local.autorun}${sep}${file}`).toString().trim().split(" ")[0];
                 if(settings.forbiddencmds.includes(i)) return message.channel.send(`\`\`\`File ${file} contains forbidden commands\`\`\``);
                 
                 require('child_process').exec(`sh ${fsDirs.user.local.autorun}${sep}${file}`, async function(err, stdout, stderr) {

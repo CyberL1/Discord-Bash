@@ -1,6 +1,4 @@
 {
-    "token": "[YOUR BOT TOKEN]",
-    "adminID": "[YOUR USER ID]",
-    "adminOnly": false,
-    "forbiddencmds": ["node", "pm2", "while", "eval", "fg", "sudo", "kill", ":(){:|:&};:", "dd", "pkill"]
+    "token": "ODI5OTc3MDI5NTc5NTA1Njc0.YG_-WA.fsho62vOwgkm9zwjEByeEwhbN-o",
+    "prefix": "db#"
 }

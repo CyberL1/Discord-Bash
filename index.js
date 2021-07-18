@@ -25,6 +25,7 @@ client.on('message', async message => {
     const { sep } = require('path');
     message.dirs = {
         users: `${__dirname}${sep}home`,
+        packages: `${__dirname}${sep}packages`,
         home: `${__dirname}${sep}home${sep}${message.author.id}`,
         bin: `${__dirname}${sep}bin`,
         js: `${__dirname}${sep}bin${sep}js`,
@@ -48,16 +49,22 @@ client.on('message', async message => {
     // Filesystem check
     if (!fs.existsSync(`${__dirname}${sep}sudoers.txt`)) await fs.writeFileSync(`${__dirname}${sep}sudoers.txt`, '[YOUR ID HERE]');
     if (!fs.existsSync(message.dirs.bin)) await fs.mkdirSync(message.dirs.bin);
+    if (!fs.existsSync(message.dirs.packages)) await fs.mkdirSync(message.dirs.packages);
     if (!fs.existsSync(message.dirs.js)) await fs.mkdirSync(message.dirs.js);
     if (!fs.existsSync(message.dirs.sh)) await fs.mkdirSync(message.dirs.sh);
     if (!fs.existsSync(message.dirs.users)) await fs.mkdirSync(message.dirs.users);
     if (!fs.existsSync(message.dirs.home)) await fs.mkdirSync(message.dirs.home);
     
     // Load js commands
-    const jsFiles = fs.readdirSync(__dirname + '/bin/js');
-    for (const file of jsFiles) {
-        if (file.endsWith('.js')) cmdRegistry.register(require('./bin/js/' + file));
-    }
+    const jsFiles = fs.readdirSync(message.dirs.js).filter(file => file.endsWith('.js'));
+    for (const file of jsFiles) cmdRegistry.register(require(`${message.dirs.js}${sep}${file}`));
+
+    // Load packages commands
+    const packagesDir = fs.readdirSync(message.dirs.packages);
+    for (const package of packagesDir) {
+        const packageFiles = fs.readdirSync(`${message.dirs.packages}${sep}${package}${sep}commands`).filter(file => file.endsWith('.js'));
+        for (const file of packageFiles) cmdRegistry.register(require(`${message.dirs.packages}${sep}${package}${sep}commands${sep}${file}`));
+}
     
     message.author.collector = message.channel.createMessageCollector(m => m.author.id == message.author.id);
     await message.react('✅');

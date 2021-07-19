@@ -170,9 +170,9 @@ class CommandRegistry {
 }
 
 class Command {
-  constructor(superuserOnly, args, name, ...aliases) {
+  constructor(superuserOnly, args, ...aliases) {
     this.superuserOnly = superuserOnly || false;
-    this.name = name;
+    this.name = args.prog;
     this.aliases = aliases;
     this.args = args;
     this.exec = null;

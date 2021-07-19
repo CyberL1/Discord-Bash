@@ -1,14 +1,15 @@
 const { Command, cmdRegistry } = require('../utils/commandParser');
 const { ArgumentParser } = require('argparse');
+const { basename } = require('path');
 
 const ap = new ArgumentParser({
-  prog: 'reload',
-  description: 'Reload a command',
+  prog: basename(__filename).split('.')[0],
+  description: 'Reload a command'
 });
 
 ap.add_argument('COMMAND', { help: 'The command to reload', nargs: '*' });
 
-module.exports = new Command(true, ap, 'reload').execute(async (args, message, client, stdin) => {  
+module.exports = new Command(true, ap).execute(async (args, message, client, stdin) => {  
   if (!args['COMMAND'][0]) return message.channel.send('You must provide a command');
 
   const command = cmdRegistry.commands.get(args['COMMAND'][0]) || cmdRegistry.commands.get(cmdRegistry.aliases.get(args['COMMAND'][0]));

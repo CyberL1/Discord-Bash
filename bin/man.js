@@ -1,4 +1,4 @@
-const { cmdRegistry, Command } = require('../../utils/commandParser');
+const { cmdRegistry, Command } = require('../utils/commandParser');
 const { ArgumentParser } = require('argparse');
 
 const ap = new ArgumentParser({
@@ -13,5 +13,5 @@ module.exports = new Command(false, ap, 'man').execute((args, message, client, s
     
     const command = cmdRegistry.resolve(args['COMMAND'][0]);
     
-    message.channel.send(!command ? `No manual entry for ${args['COMMAND'][0]}` : `\`\`\`\n${command.args.format_help().split('\n')}\`\`\``);
+    message.channel.send(!command ? `No manual entry for ${args['COMMAND'][0]}` : `\`\`\`\n${command.args.format_help()}\`\`\``);
   });

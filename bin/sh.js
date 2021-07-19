@@ -1,13 +1,13 @@
-const { Command } = require('../../utils/commandParser');
+const { Command } = require('../utils/commandParser');
 const { ArgumentParser } = require('argparse');
-const interpreter = require('../../utils/interpreter');
+const interpreter = require('../utils/interpreter');
 
 const ap = new ArgumentParser({
   prog: 'sh',
-  description: 'Executes a shell script',
+  description: 'Executes a shell script'
 });
 
-ap.add_argument('PATH', {nargs: '*'});
+ap.add_argument('PATH', {help: 'Path to the script', nargs: '*'});
 
 module.exports = new Command(false, ap, 'sh').execute((args, message, client, stdin) => {
     const { sep } = require('path');

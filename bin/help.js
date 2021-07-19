@@ -1,9 +1,9 @@
-const { cmdRegistry, Command } = require('../../utils/commandParser');
+const { cmdRegistry, Command } = require('../utils/commandParser');
 const { ArgumentParser } = require('argparse');
 
 const ap = new ArgumentParser({
   prog: 'help',
-  description: 'Show basic information concerning bot operation.',
+  description: 'Show all commands',
   add_help: false,
 });
 

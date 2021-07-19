@@ -1,4 +1,4 @@
-const { cmdRegistry, Command } = require('../../utils/commandParser');
+const { cmdRegistry, Command } = require('../utils/commandParser');
 const { ArgumentParser } = require('argparse');
 const fs = require('fs');
 

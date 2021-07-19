@@ -178,7 +178,7 @@ class Command {
     this.exec = null;
   }
 
-  run(exec) {
+  execute(exec) {
     this.exec = exec;
     return this;
   }

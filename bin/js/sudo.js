@@ -13,7 +13,7 @@ const ap = new ArgumentParser({
 ap.add_argument('COMMAND', {help: 'The command to run.', nargs: '?'});
 ap.add_argument('ARG', {help: 'The arguments to COMMAND.', nargs: '*'});
 
-module.exports = new Command(false, ap, 'sudo').run(async (args, msg, bot, stdin) => {
+module.exports = new Command(false, ap, 'sudo').execute(async (args, msg, bot, stdin) => {
     const name = args['COMMAND'];
     
     if (!sudoers.includes(msg.author.id)) return msg.channel.send(`${msg.author.username} is not in the sudoers file.\nThis incident will be reported.`);

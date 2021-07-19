@@ -9,7 +9,7 @@ const ap = new ArgumentParser({
 
 ap.add_argument('FILE', { help: 'The file to remove', nargs: '*' });
 
-module.exports = new Command(false, ap, 'rm').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'rm').execute((args, message, client, stdin) => {
     const { sep } = require('path');
 
     if (!args['FILE'][0]) return message.channel.send("Provide file to remove");

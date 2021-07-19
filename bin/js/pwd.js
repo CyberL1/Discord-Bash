@@ -6,4 +6,4 @@ const ap = new ArgumentParser({
   description: 'Shows your currect path',
 });
 
-module.exports = new Command(false, ap, 'pwd').run((args, message, client, stdin) => message.channel.send(message.author.currentdirectory));
+module.exports = new Command(false, ap, 'pwd').execute((args, message, client, stdin) => message.channel.send(message.author.currentdirectory));

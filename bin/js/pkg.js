@@ -12,7 +12,7 @@ const ap = new ArgumentParser({
 ap.add_argument('ACTION', {help: 'INSTALL/REMOVE/UPDATE', nargs: '?'});
 ap.add_argument('PACKAGE', {help: 'PACKAGE NAME', nargs: '*'});
 
-module.exports = new Command(true, ap, 'pkg').run(async (args, message, client, stdin) => {
+module.exports = new Command(true, ap, 'pkg').execute(async (args, message, client, stdin) => {
       if (!args['ACTION']) return message.channel.send("Provide an action (install/remove/update)");
 
       const pkgAuthor = args['PACKAGE'][0];

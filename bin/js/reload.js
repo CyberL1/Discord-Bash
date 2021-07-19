@@ -8,7 +8,7 @@ const ap = new ArgumentParser({
 
 ap.add_argument('COMMAND', { help: 'The command to reload', nargs: '*' });
 
-module.exports = new Command(true, ap, 'reload').run(async (args, message, client, stdin) => {  
+module.exports = new Command(true, ap, 'reload').execute(async (args, message, client, stdin) => {  
   if (!args['COMMAND'][0]) return message.channel.send('You must provide a command');
 
   const command = cmdRegistry.commands.get(args['COMMAND'][0]) || cmdRegistry.commands.get(cmdRegistry.aliases.get(args['COMMAND'][0]));

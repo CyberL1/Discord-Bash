@@ -9,7 +9,7 @@ const ap = new ArgumentParser({
 
 ap.add_argument('DIRECTORY', {help: 'The directory to remove', nargs: '*'});
 
-module.exports = new Command(false, ap, 'rmdir').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'rmdir').execute((args, message, client, stdin) => {
     const { sep } = require('path');
 
     if (!args['DIRECTORY'][0]) return message.channel.send("Provide directory to remove");

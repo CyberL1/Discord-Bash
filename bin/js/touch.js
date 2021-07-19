@@ -10,7 +10,7 @@ const ap = new ArgumentParser({
 ap.add_argument('FILE', { nargs: '?' });
 ap.add_argument('TEXT', { nargs: '*' });
 
-module.exports = new Command(false, ap, 'touch').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'touch').execute((args, message, client, stdin) => {
     const { sep } = require('path');
     
     if (!args['FILE']) return message.channel.send("Provide filename");

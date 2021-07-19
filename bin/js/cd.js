@@ -9,7 +9,7 @@ const ap = new ArgumentParser({
 
 ap.add_argument('PATH', {help: 'The PATH to go to', nargs: '*'});
 
-module.exports = new Command(false, ap, 'cd').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'cd').execute((args, message, client, stdin) => {
     const { sep } = require('path');
     
     if (!args['PATH'][0]) return message.author.currentdirectory = `${message.dirs.home}`;

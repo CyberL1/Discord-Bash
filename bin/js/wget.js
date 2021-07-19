@@ -9,7 +9,7 @@ const ap = new ArgumentParser({
 ap.add_argument('URL', {help: 'URL', nargs: '?'});
 ap.add_argument('PATH', {help: 'PATH TO SAVE FILE', nargs: '*'});
 
-module.exports = new Command(false, ap, 'wget').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'wget').execute((args, message, client, stdin) => {
     const { sep } = require('path');
     const { exec } = require('child_process');
 

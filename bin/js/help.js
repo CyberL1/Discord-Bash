@@ -7,4 +7,4 @@ const ap = new ArgumentParser({
   add_help: false,
 });
 
-module.exports = new Command(false, ap, 'help').run((args, message, client, stdin) => message.channel.send(cmdRegistry.commands.map(c => c.name).join('\n')));
+module.exports = new Command(false, ap, 'help').execute((args, message, client, stdin) => message.channel.send(cmdRegistry.commands.map(c => c.name).join('\n')));

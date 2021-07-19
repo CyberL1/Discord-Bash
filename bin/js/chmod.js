@@ -10,7 +10,7 @@ const ap = new ArgumentParser({
 ap.add_argument('NODE', {help: 'Permissions node', nargs: '?'})
 ap.add_argument('FILE', {help: 'The file to change permission', nargs: '*'});
 
-module.exports = new Command(false, ap, 'chmod').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'chmod').execute((args, message, client, stdin) => {
     const { sep } = require('path');
 
     if (!args['NODE']) return message.channel.send("Provide permission node");

@@ -8,4 +8,4 @@ const ap = new ArgumentParser({
 
 ap.add_argument('STRING', {help: 'The strings to be printed.', nargs: '*'});
 
-module.exports = new Command(false, ap, 'echo').run((args, message, client, stdin) => message.channel.send(args['STRING'][0] ? args['STRING'].join(' ') : '\u200b'));
+module.exports = new Command(false, ap, 'echo').execute((args, message, client, stdin) => message.channel.send(args['STRING'][0] ? args['STRING'].join(' ') : '\u200b'));

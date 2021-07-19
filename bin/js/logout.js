@@ -6,4 +6,4 @@ const ap = new ArgumentParser({
   description: 'logout from system',
 });
 
-module.exports = new Command(false, ap, 'logout', 'exit').run((args, message, client, stdin) => message.author.collector.stop());
+module.exports = new Command(false, ap, 'logout', 'exit').execute((args, message, client, stdin) => message.author.collector.stop());

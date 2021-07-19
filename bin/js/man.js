@@ -8,7 +8,7 @@ const ap = new ArgumentParser({
 
 ap.add_argument('COMMAND', {help: 'The command to look up.', nargs: '*'});
 
-module.exports = new Command(false, ap, 'man').run((args, message, client, stdin) => {
+module.exports = new Command(false, ap, 'man').execute((args, message, client, stdin) => {
     if (!args['COMMAND'][0]) return message.channel.send('What manual page do you want?');
     
     const command = cmdRegistry.resolve(args['COMMAND'][0]);

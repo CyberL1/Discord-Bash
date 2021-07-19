@@ -7,6 +7,7 @@ exports.cmd = async (message, client, cmd) => {
     .replaceAll('\\n', '\n')
     .replaceAll('$USER', message.author.username)
     .replaceAll('$ID', message.author.id)
+    .replaceAll('$PWD', message.author.currentdirectory)
 
     await cmdRegistry.execute(message, client, cmd.trim());
 }
@@ -21,6 +22,7 @@ exports.file = (message, client, file) => {
        .replaceAll('\\n', '\n')
        .replaceAll('$USER', message.author.username)
        .replaceAll('$ID', message.author.id)
+       .replaceAll('$PWD', message.author.currentdirectory)
 
         await cmdRegistry.execute(message, client, line.trim());
     });

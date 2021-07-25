@@ -13,6 +13,13 @@ client.on("ready", () => {
     client.user.setActivity('Mention me');
 });
 
+// Check for system settings file
+if (!fs.existsSync('./settings.json')) {
+    fs.copyFileSync('./settings.json.example', './settings.json');
+    console.log('settings.json file generated, please paste your bot token into it.');
+    process.exit(0);
+}
+
 // Load system settings
 const settings = require('./settings.json');
 

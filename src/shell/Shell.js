@@ -1,5 +1,6 @@
 import EventEmitter from "events";
 import Init from "./init.js";
+import dotnev from "dotenv";
 
 export const Shell = class extends EventEmitter {
   constructor() {
@@ -14,7 +15,14 @@ export const Shell = class extends EventEmitter {
   }
 
   async run(interaction, command, args) {
-    await interaction.deferReply({ ephemeral: true });
+    interaction.user.env = {
+      RESPONSE_TYPE: "private",
+      HOME: `/home/${interaction.user.id}`,
+    };
+
+    await interaction.deferReply({
+      ephemeral: interaction.user.env.RESPONSE_TYPE === "private",
+    });
 
     try {
       const cmd = this.commands.get(command);
@@ -25,5 +33,18 @@ export const Shell = class extends EventEmitter {
       interaction.editReply(`${command}: command not found`);
       console.error(e);
     }
+  }
+
+  fromVfs(path) {
+    return `${import.meta.dirname}/../../filesystem/${path}`;
+  }
+
+  getConfig(userId) {
+    const config = dotnev.config({
+      override: true,
+      path: this.fromVfs(`/home/${userId}/.shellcfg`),
+    });
+
+    return config;
   }
 };

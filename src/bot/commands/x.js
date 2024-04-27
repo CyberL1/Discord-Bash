@@ -1,9 +1,10 @@
 import { SlashCommandBuilder } from "discord.js";
 
 export const run = (interaction) => {
-  const command = interaction.options.getString("cmd");
+  const args = interaction.options.getString("cmd").split(" ");
+  const command = args.shift();
 
-  shell.run(command);
+  interaction.client.shell.run(interaction, command, args);
 };
 
 export const data = new SlashCommandBuilder()

@@ -1,4 +1,5 @@
 import { readdirSync } from "fs";
+import { Shell } from "../../shell/Shell.js";
 
 export const run = async (client) => {
   if ((await client.application.commands.fetch()).size == 0) {
@@ -18,7 +19,9 @@ export const run = async (client) => {
   }
 
   console.log(`${client.user.username} ready`);
-  import("../../shell/index.js");
+
+  client.shell = new Shell();
+  client.shell.init();
 };
 
 export const data = {

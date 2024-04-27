@@ -15,10 +15,7 @@ export const Shell = class extends EventEmitter {
   }
 
   async run(interaction, command, args) {
-    interaction.user.env = {
-      RESPONSE_TYPE: "private",
-      HOME: `/home/${interaction.user.id}`,
-    };
+    interaction.user.env = this.getConfig(interaction.user.id);
 
     await interaction.deferReply({
       ephemeral: interaction.user.env.RESPONSE_TYPE === "private",
@@ -45,6 +42,6 @@ export const Shell = class extends EventEmitter {
       path: this.fromVfs(`/home/${userId}/.shellcfg`),
     });
 
-    return config;
+    return config.parsed;
   }
 };

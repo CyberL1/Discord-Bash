@@ -1,4 +1,5 @@
-import { readdirSync } from "fs";
+import { existsSync, readdirSync } from "fs";
+import decompress from "decompress";
 
 export default async (shell) => {
   const eventFiles = readdirSync(`${import.meta.dirname}/events`).filter((f) =>
@@ -24,5 +25,13 @@ export default async (shell) => {
     const commandName = file.split(".js")[0];
 
     shell.commands.set(commandName, command);
+  }
+
+  // Unpack rootfs.zip
+
+  if (!existsSync("filesysytem")) {
+    console.log("Unpacking rootfs");
+    await decompress("rootfs.zip", "filesystem");
+    console.log("Unpacking done");
   }
 };

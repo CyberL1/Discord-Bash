@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import { Shell } from "../../shell/Shell.js";
+import { Shell } from "../../shell/classes/Shell.js";
 
 export const run = async (client) => {
   if ((await client.application.commands.fetch()).size == 0) {

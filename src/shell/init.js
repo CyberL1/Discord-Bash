@@ -22,9 +22,7 @@ export default async (shell) => {
 
   for (const file of commandFiles) {
     const command = await import(`./commands/${file}`);
-    const commandName = file.split(".js")[0];
-
-    shell.commands.set(commandName, command);
+    shell.cmdRegistry.register(command);
   }
 
   // Unpack rootfs.zip

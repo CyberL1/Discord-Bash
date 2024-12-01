@@ -3,7 +3,7 @@ import Init from "../init.ts";
 import { Filesystem } from "./Filesystem.ts";
 import { Users } from "./Users.ts";
 import { CommandRegistry } from "./CommandRegistry.ts";
-import { CommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 
 export class Shell extends EventEmitter {
   cmdRegistry: CommandRegistry;
@@ -19,7 +19,7 @@ export class Shell extends EventEmitter {
     this.emit("ready", this);
   }
 
-  async run(interaction: CommandInteraction, command: string) {
+  async run(interaction: ChatInputCommandInteraction, command: string) {
     if (!this.users.exists(interaction.user.id)) {
       return interaction.reply(
         "You do not have an account in the system, do `/create-user` to create an account",

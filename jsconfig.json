@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "typeRoots": [
+      "globals.d.ts"
+    ],
+    "allowImportingTsExtensions": true
+  }
+}

@@ -1,16 +1,19 @@
 import { existsSync, mkdirSync, rmSync } from "fs";
 import dotenv from "dotenv";
+import type { Shell } from "./Shell.ts";
 
 export class Users {
-  constructor(shell) {
+  private shell: Shell;
+
+  constructor(shell: Shell) {
     this.shell = shell;
   }
 
-  exists(userId) {
+  exists(userId: string) {
     return existsSync(this.shell.fs.from(`/home/${userId}`));
   }
 
-  create(userId) {
+  create(userId: string) {
     if (this.exists(userId)) {
       throw new Error("User found");
     }
@@ -18,7 +21,7 @@ export class Users {
     mkdirSync(this.shell.fs.from(`/home/${userId}`));
   }
 
-  delete(userId) {
+  delete(userId: string) {
     if (!this.exists(userId)) {
       throw new Error("User not found");
     }
@@ -26,7 +29,7 @@ export class Users {
     rmSync(this.shell.fs.from(`/home/${userId}`), { recursive: true });
   }
 
-  get(userId) {
+  get(userId: string) {
     if (!this.exists(userId)) {
       throw new Error("User not found");
     }

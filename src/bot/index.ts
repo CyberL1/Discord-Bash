@@ -6,7 +6,7 @@ const client = new Client({ intents: ["Guilds"] });
 client.commands = new Collection();
 
 const eventFiles = readdirSync(`${import.meta.dirname}/events`).filter((f) =>
-  f.endsWith(".js"),
+  f.endsWith(".ts"),
 );
 
 for (const file of eventFiles) {
@@ -20,12 +20,12 @@ for (const file of eventFiles) {
 }
 
 const commandFiles = readdirSync(`${import.meta.dirname}/commands`).filter(
-  (f) => f.endsWith(".js"),
+  (f) => f.endsWith(".ts"),
 );
 
 for (const file of commandFiles) {
   const command = await import(`./commands/${file}`);
-  const commandName = file.split(".js")[0];
+  const commandName = file.split(".")[0];
 
   client.commands.set(commandName, command);
 }

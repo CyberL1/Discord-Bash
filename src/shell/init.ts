@@ -1,9 +1,10 @@
 import { existsSync, readdirSync } from "fs";
 import decompress from "decompress";
+import { Shell } from "./classes/Shell.ts";
 
-export default async (shell) => {
+export default async (shell: Shell) => {
   const eventFiles = readdirSync(`${import.meta.dirname}/events`).filter((f) =>
-    f.endsWith(".js"),
+    f.endsWith(".ts"),
   );
 
   for (const file of eventFiles) {
@@ -17,16 +18,15 @@ export default async (shell) => {
   }
 
   const commandFiles = readdirSync(`${import.meta.dirname}/commands`).filter(
-    (f) => f.endsWith(".js"),
+    (f) => f.endsWith(".ts"),
   );
 
   for (const file of commandFiles) {
-    const command = await import(`./commands/${file}`);
+    const { default: command } = await import(`./commands/${file}`);
     shell.cmdRegistry.register(command);
   }
 
   // Unpack rootfs.zip
-
   if (!existsSync("filesystem")) {
     console.log("Unpacking rootfs");
     await decompress("rootfs.zip", "filesystem");

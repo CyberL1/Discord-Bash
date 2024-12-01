@@ -1,5 +1,11 @@
+import type { Token } from "../../types.ts";
+
 export class Tokenizer {
-  constructor(str) {
+  str: string;
+  tokens: Token[];
+  current: string;
+
+  constructor(str: string) {
     this.str = str.trim();
     this.tokens = [];
     this.current = "";

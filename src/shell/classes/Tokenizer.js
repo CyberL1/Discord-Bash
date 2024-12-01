@@ -28,7 +28,7 @@ export class Tokenizer {
       }
     }
 
-    // Ensure the last string doens't get skipped
+    // Ensure the last string doesn't get skipped
     if (this.current.length) {
       this.token("str");
     }

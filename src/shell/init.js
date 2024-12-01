@@ -27,7 +27,7 @@ export default async (shell) => {
 
   // Unpack rootfs.zip
 
-  if (!existsSync("filesysytem")) {
+  if (!existsSync("filesystem")) {
     console.log("Unpacking rootfs");
     await decompress("rootfs.zip", "filesystem");
     console.log("Unpacking done");

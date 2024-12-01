@@ -25,7 +25,7 @@ const command: Command = {
     }
 
     if (!statSync(realPath).isDirectory()) {
-      return interaction.editReply("Path in not a directory");
+      return interaction.editReply("Path is not a directory");
     }
 
     interaction.client.shell.users.setDirectory(interaction.user.id, path);

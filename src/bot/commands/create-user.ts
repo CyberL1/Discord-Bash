@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
-export const run = (interaction) => {
+export const run = (interaction: ChatInputCommandInteraction) => {
   try {
     interaction.client.shell.users.create(interaction.user.id);
   } catch {
-   return interaction.reply("You already have an account");
+    return interaction.reply("You already have an account");
   }
 
   interaction.reply("Account created");

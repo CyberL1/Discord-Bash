@@ -1,6 +1,6 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
-export const run = (interaction) => {
+export const run = (interaction: ChatInputCommandInteraction) => {
   const cmd = interaction.options.getString("cmd");
   interaction.client.shell.run(interaction, cmd);
 };

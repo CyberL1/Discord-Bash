@@ -1,7 +1,8 @@
 import { readdirSync } from "fs";
-import { Shell } from "../../shell/classes/Shell.js";
+import { Shell } from "../../shell/classes/Shell.ts";
+import { Client } from "discord.js";
 
-export const run = async (client) => {
+export const run = async (client: Client) => {
   if ((await client.application.commands.fetch()).size == 0) {
     const commandFiles = readdirSync(
       `${import.meta.dirname}/../commands`,

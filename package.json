@@ -2,10 +2,10 @@
   "name": "discord-bash",
   "version": "3.0.0",
   "description": "A bash shell for Discord",
-  "main": "src/bot/index",
+  "main": "src/bot/index.ts",
   "type": "module",
   "scripts": {
-    "start": "node .",
+    "start": "node --experimental-strip-types .",
     "deploy": "node src/bot/deploy"
   },
   "repository": {

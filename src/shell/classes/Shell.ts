@@ -22,7 +22,7 @@ export class Shell extends EventEmitter {
   async run(interaction: CommandInteraction, command: string) {
     if (!this.users.exists(interaction.user.id)) {
       return interaction.reply(
-        "You don not have an account in the system, do `/create-user` to create an account",
+        "You do not have an account in the system, do `/create-user` to create an account",
       );
     }
 

@@ -4,9 +4,11 @@ import type { Shell } from "./Shell.ts";
 
 export class Users {
   private shell: Shell;
+  private userDirectories: Map<string, string>;
 
   constructor(shell: Shell) {
     this.shell = shell;
+    this.userDirectories = new Map();
   }
 
   exists(userId: string) {
@@ -39,6 +41,15 @@ export class Users {
         override: true,
         path: this.shell.fs.from(`/home/${userId}/.shellcfg`),
       }).parsed,
+      variables: {
+        PWD:
+          this.userDirectories[userId]?.replaceAll("\\", "/") ||
+          `/home/${userId}`,
+      },
     };
+  }
+
+  setDirectory(userId: string, path: string) {
+    this.userDirectories[userId] = path;
   }
 }

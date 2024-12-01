@@ -2,7 +2,7 @@ import EventEmitter from "events";
 import Init from "../init.js";
 import { Filesystem } from "./Filesystem.js";
 import { Users } from "./Users.js";
-import { CommandRegistry } from "./Tokenizer.js";
+import { CommandRegistry } from "./CommandRegistry.js";
 
 export class Shell extends EventEmitter {
   constructor() {

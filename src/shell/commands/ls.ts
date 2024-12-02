@@ -21,7 +21,7 @@ const command: Command = {
       return interaction.editReply("Path is not a directory");
     }
 
-    const dirContents = readdirSync(interaction.client.shell.fs.from(location));
+    const dirContents = readdirSync(realPath);
     interaction.editReply(dirContents.join(" ") || "\u200b");
   },
 };

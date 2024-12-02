@@ -20,7 +20,7 @@ export class Filesystem {
     } else if (path.startsWith("~/")) {
       path = path.replace("~/", `${env.HOME}/`);
     } else if (path.startsWith("/")) {
-      path = path.replace(env.HOME, "");
+      path = join("/", path);
     } else {
       path = join(env.PWD, path);
     }

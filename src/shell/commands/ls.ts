@@ -4,8 +4,8 @@ import { readdirSync } from "fs";
 const command: Command = {
   name: "ls",
   run: (interaction) => {
-    const location = interaction.client.shell.users.get(interaction.user.id)
-      .variables.PWD;
+    const location = interaction.client.shell.users.get(interaction.user.id).env
+      .PWD;
 
     const dirContents = readdirSync(interaction.client.shell.fs.from(location));
 

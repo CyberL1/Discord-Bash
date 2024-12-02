@@ -5,8 +5,7 @@ import { join } from "path";
 const command: Command = {
   name: "cd",
   run: (interaction, [path]) => {
-    const pwd = interaction.client.shell.users.get(interaction.user.id)
-      .variables.PWD;
+    const pwd = interaction.client.shell.users.get(interaction.user.id).env.PWD;
 
     if (!path || path === "~") {
       path = `/home/${interaction.user.id}`;

@@ -41,7 +41,7 @@ export class Users {
         override: true,
         path: this.shell.fs.from(`/home/${userId}/.shellcfg`),
       }).parsed,
-      variables: {
+      env: {
         PWD:
           this.userDirectories[userId]?.replaceAll("\\", "/") ||
           `/home/${userId}`,

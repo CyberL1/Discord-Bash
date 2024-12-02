@@ -40,10 +40,23 @@ export class CommandRegistry {
           return interaction.editReply(`${cmd.value}: command not found`);
         }
 
-        command.run(
-          interaction,
-          tokens.slice(1).map((t) => t.value),
-        );
+        const { env } = interaction.client.shell.users.get(interaction.user.id);
+
+        const args = tokens.slice(1).map((t) => {
+          const match = /\\?\$([A-Za-z_][A-Za-z0-9_]*)/g;
+
+          if (t.value.match(match)) {
+            for (const m of t.value.match(match)) {
+              if (!m.startsWith("\\")) {
+                t.value = t.value.replace(m, env[m.slice(1)]);
+              }
+            }
+          }
+
+          return t.value;
+        });
+
+        command.run(interaction, args);
       } catch (e) {
         throw new Error(`Errored while running:\n${e.message}`);
       }

@@ -42,9 +42,8 @@ export class Users {
         path: this.shell.fs.from(`/home/${userId}/.shellcfg`),
       }).parsed,
       env: {
-        PWD:
-          this.userDirectories[userId]?.replaceAll("\\", "/") ||
-          `/home/${userId}`,
+        HOME: `/home/${userId}`,
+        PWD: this.userDirectories[userId] || `/home/${userId}`,
       },
     };
   }

@@ -20,6 +20,22 @@ export class CommandRegistry {
 
     try {
       tokens = new Tokenizer(str).tokenize();
+
+      // Replace "$" variables
+      const { env } = interaction.client.shell.users.get(interaction.user.id);
+      tokens = tokens.map((t) => {
+        const match = /\\?\$([A-Za-z_][A-Za-z0-9_]*)/g;
+
+        if (t.value.match(match)) {
+          for (const m of t.value.match(match)) {
+            if (!m.startsWith("\\") && env[m.slice(1)]) {
+              t.value = t.value.replace(m, env[m.slice(1)]);
+            }
+          }
+        }
+
+        return t;
+      });
     } catch (e) {
       throw new Error(`Errored while parsing:\n${e.message}`);
     }
@@ -40,22 +56,7 @@ export class CommandRegistry {
           return interaction.editReply(`${cmd.value}: command not found`);
         }
 
-        const { env } = interaction.client.shell.users.get(interaction.user.id);
-
-        const args = tokens.slice(1).map((t) => {
-          const match = /\\?\$([A-Za-z_][A-Za-z0-9_]*)/g;
-
-          if (t.value.match(match)) {
-            for (const m of t.value.match(match)) {
-              if (!m.startsWith("\\")) {
-                t.value = t.value.replace(m, env[m.slice(1)]);
-              }
-            }
-          }
-
-          return t.value;
-        });
-
+        const args = tokens.slice(1).map((t) => t.value);
         command.run(interaction, args);
       } catch (e) {
         throw new Error(`Errored while running:\n${e.message}`);

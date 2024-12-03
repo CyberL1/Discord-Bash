@@ -1,6 +1,8 @@
 import { ChatInputCommandInteraction } from "discord.js";
-import type { Command, Token } from "../../types.ts";
+import type { Command, Exit, Token } from "../../types.ts";
 import { Tokenizer } from "./Tokenizer.ts";
+import { createInterface } from "readline";
+import { createReadStream } from "fs";
 
 export class CommandRegistry {
   commands: Map<string, Command>;
@@ -39,29 +41,94 @@ export class CommandRegistry {
     } catch (e) {
       throw new Error(`Errored while parsing:\n${e.message}`);
     }
-    return await this.executeTokens(interaction, tokens);
+
+    return await this.executeTokens(interaction, [tokens]);
+  }
+
+  async executeFile(interaction: ChatInputCommandInteraction, path: string) {
+    const user = interaction.client.shell.users.get(interaction.user.id);
+
+    if (!interaction.deferred) {
+      await interaction.deferReply({
+        ephemeral: user.config.RESPONSE_TYPE === "private",
+      });
+    }
+
+    const tokensArray = [];
+
+    try {
+      const rl = createInterface({ input: createReadStream(path) });
+
+      for await (const line of rl) {
+        if (line.length) {
+          console.log(line);
+          tokensArray.push(new Tokenizer(line).tokenize());
+        }
+      }
+
+      for (let tokens of tokensArray) {
+        // Replace "$" variables
+        const { env } = interaction.client.shell.users.get(interaction.user.id);
+        tokens = tokens.map((t) => {
+          const match = /\\?\$([A-Za-z_][A-Za-z0-9_]*)/g;
+
+          if (t.value.match(match)) {
+            for (const m of t.value.match(match)) {
+              if (!m.startsWith("\\") && env[m.slice(1)]) {
+                t.value = t.value.replace(m, env[m.slice(1)]);
+              }
+            }
+          }
+
+          return t;
+        });
+      }
+    } catch (e) {
+      throw new Error(`Errored while parsing:\n${e.message}`);
+    }
+
+    return await this.executeTokens(interaction, tokensArray);
   }
 
   async executeTokens(
     interaction: ChatInputCommandInteraction,
-    tokens: Token[],
+    tokensArray: Token[][],
   ) {
-    const cmds = tokens.filter((t) => t.type === "cmd");
+    const exits = [] as Exit[];
+    let exit = {} as Exit;
 
-    for (const cmd of cmds) {
-      try {
-        const command = this.commands.get(cmd.value);
+    for (const tokens of tokensArray) {
+      const cmds = tokens.filter((t) => t.type === "cmd");
 
-        if (!command) {
-          return interaction.editReply(`${cmd.value}: command not found`);
+      for (const cmd of cmds) {
+        try {
+          const command = this.commands.get(cmd.value);
+
+          if (!command) {
+            exit = { code: 127, message: `${cmd.value}: command not found` };
+            exits.push(exit);
+            continue;
+          }
+
+          const args = tokens.slice(1).map((t) => t.value);
+          exit = await command.run(interaction, args);
+
+          exits.push(exit);
+        } catch (e) {
+          exit.code = 1;
+
+          console.error(`Exited with code: ${exit.code}`);
+          throw new Error(`Errored while running:\n${e.message}`);
         }
-
-        const args = tokens.slice(1).map((t) => t.value);
-        command.run(interaction, args);
-      } catch (e) {
-        throw new Error(`Errored while running:\n${e.message}`);
       }
     }
+
+    if (exit) {
+      exit.message = exits.map((e) => e.message).join("");
+      interaction.editReply(`\`\`\`\n${exit.message}\n\`\`\``);
+    }
+
+    return exit;
   }
 
   register(cmd: Command) {

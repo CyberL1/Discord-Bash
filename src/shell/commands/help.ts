@@ -9,7 +9,7 @@ const command: Command = {
       commands.push(key);
     }
 
-    interaction.editReply(commands.join("\n"));
+    return { code: 0, message: commands.join("\n") };
   },
 };
 

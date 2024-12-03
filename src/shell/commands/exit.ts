@@ -1,9 +1,9 @@
 import type { Command } from "../../types.ts";
 
 const command: Command = {
-  name: "echo",
-  run: (_interaction, args) => {
-    return { code: 0, message: `${args.join(" ")}\n` };
+  name: "exit",
+  run: (_imteraction, [code]) => {
+    return { code: Number(code) || 0 };
   },
 };
 

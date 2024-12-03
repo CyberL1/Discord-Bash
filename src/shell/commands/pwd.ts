@@ -5,7 +5,7 @@ const command: Command = {
   run: (interaction) => {
     const user = interaction.client.shell.users.get(interaction.user.id);
 
-    interaction.editReply(user.env.PWD);
+    return { code: 0, message: user.env.PWD };
   },
 };
 

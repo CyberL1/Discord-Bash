@@ -2,10 +2,12 @@ import { ChatInputCommandInteraction } from "discord.js";
 
 export interface Command {
   name: string;
+  description: string;
+  args?: Arguments;
   superuserOnly?: boolean;
   run: (
     interaction: ChatInputCommandInteraction,
-    args: string[],
+    args: { [key: string]: string },
   ) => Exit | Promise<Exit>;
 }
 
@@ -17,4 +19,13 @@ export interface Token {
 export interface Exit {
   code: number;
   message?: string;
+}
+
+interface Arguments {
+  [arg: string]: ArgumentOptions;
+}
+
+interface ArgumentOptions {
+  help: string;
+  infinite?: boolean;
 }

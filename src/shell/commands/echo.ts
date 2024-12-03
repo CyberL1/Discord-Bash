@@ -2,8 +2,11 @@ import type { Command } from "../../types.ts";
 
 const command: Command = {
   name: "echo",
-  run: (_interaction, args) => {
-    return { code: 0, message: `${args.join(" ")}\n` };
+  description: "Displays provided text",
+  args: { text: { help: "The text to display", infinite: true } },
+
+  run: (_interaction, { text }) => {
+    return { code: 0, message: text };
   },
 };
 

@@ -2,6 +2,8 @@ import type { Command } from "../../types.ts";
 
 const command: Command = {
   name: "help",
+  description: "Displays commmands",
+  
   run: (interaction) => {
     const commands = [];
 

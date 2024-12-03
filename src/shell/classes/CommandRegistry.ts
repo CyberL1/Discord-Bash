@@ -3,6 +3,7 @@ import type { Command, Exit, Token } from "../../types.ts";
 import { Tokenizer } from "./Tokenizer.ts";
 import { createInterface } from "readline";
 import { createReadStream } from "fs";
+import { Arguments } from "./Arguments.ts";
 
 export class CommandRegistry {
   commands: Map<string, Command>;
@@ -110,7 +111,10 @@ export class CommandRegistry {
             continue;
           }
 
-          const args = tokens.slice(1).map((t) => t.value);
+          const args = command.args
+            ? new Arguments(command).parse(tokens.slice(1).map((t) => t.value))
+            : [];
+
           exit = await command.run(interaction, args);
 
           if (exit) {

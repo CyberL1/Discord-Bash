@@ -2,7 +2,10 @@ import type { Command } from "../../types.ts";
 
 const command: Command = {
   name: "exit",
-  run: (_imteraction, [code]) => {
+  description: "Returns a given code",
+  args: { code: { help: "The code to return" } },
+
+  run: (_imteraction, { code }) => {
     return { code: Number(code) || 0 };
   },
 };

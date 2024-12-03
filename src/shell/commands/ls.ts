@@ -3,7 +3,10 @@ import { existsSync, readdirSync, statSync } from "fs";
 
 const command: Command = {
   name: "ls",
-  run: (interaction, [path]) => {
+  description: "Displays contents of a directory",
+  args: { path: { help: "Path to a directory" } },
+  
+  run: (interaction, {path}) => {
     const { env } = interaction.client.shell.users.get(interaction.user.id);
     let location = env.PWD;
 

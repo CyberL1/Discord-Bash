@@ -3,7 +3,10 @@ import { existsSync, statSync } from "fs";
 
 const command: Command = {
   name: "cd",
-  run: (interaction, [path]) => {
+  description: "Changes your directory",
+  args: { path: { help: "The directory to go to" } },
+  
+  run: (interaction, { path }) => {
     const { env } = interaction.client.shell.users.get(interaction.user.id);
 
     if (!path) {

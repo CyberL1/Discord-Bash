@@ -3,7 +3,10 @@ import { existsSync, readFileSync, statSync } from "fs";
 
 const command: Command = {
   name: "cat",
-  run: async (interaction, [path]) => {
+  description: "Displays file content",
+  args: { path: { help: "Path to file" } },
+
+  run: async (interaction, { path }) => {
     const { env } = interaction.client.shell.users.get(interaction.user.id);
 
     const realPath = interaction.client.shell.fs.from(

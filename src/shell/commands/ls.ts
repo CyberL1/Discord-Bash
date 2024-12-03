@@ -14,15 +14,16 @@ const command: Command = {
     const realPath = interaction.client.shell.fs.from(location);
 
     if (!existsSync(realPath)) {
-      return interaction.editReply("Path does not exist");
+      return { code: 1, message: "Path does not exist" };
     }
 
     if (!statSync(realPath).isDirectory()) {
-      return interaction.editReply("Path is not a directory");
+      return { code: 1, message: "Path is not a directory" };
     }
 
     const dirContents = readdirSync(realPath);
-    interaction.editReply(dirContents.join(" ") || "\u200b");
+
+    return { code: 0, message: dirContents.join(" ") || "\u200b" };
   },
 };
 

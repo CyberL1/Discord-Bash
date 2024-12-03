@@ -113,7 +113,13 @@ export class CommandRegistry {
           const args = tokens.slice(1).map((t) => t.value);
           exit = await command.run(interaction, args);
 
-          exits.push(exit);
+          if (exit) {
+            if (exit.code != 0 && exit.message) {
+              exit.message = `${cmd.value}: ${exit.message}`;
+            }
+
+            exits.push(exit);
+          }
         } catch (e) {
           exit.code = 1;
 

@@ -5,7 +5,7 @@ const command: Command = {
   description: "Displays provided text",
   args: { text: { help: "The text to display", infinite: true } },
 
-  run: (_interaction, { text }) => {
+  run: (_interaction, { args: { text } }) => {
     return { code: 0, message: text };
   },
 };

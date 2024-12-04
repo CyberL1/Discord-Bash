@@ -5,8 +5,8 @@ const command: Command = {
   name: "cd",
   description: "Changes your directory",
   args: { path: { help: "The directory to go to" } },
-  
-  run: (interaction, { path }) => {
+
+  run: (interaction, { args: { path } }) => {
     const { env } = interaction.client.shell.users.get(interaction.user.id);
 
     if (!path) {

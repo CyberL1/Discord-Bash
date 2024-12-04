@@ -28,4 +28,5 @@ interface Arguments {
 interface ArgumentOptions {
   help: string;
   infinite?: boolean;
+  required?: boolean;
 }

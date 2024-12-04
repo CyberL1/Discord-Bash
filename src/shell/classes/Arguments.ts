@@ -13,6 +13,10 @@ export class Arguments {
     for (const [name, properties] of Object.entries(this.command.args)) {
       const index = Object.keys(this.command.args).indexOf(name);
 
+      if (properties.required && !args[index]) {
+        return name;
+      }
+
       if (properties.infinite) {
         argsParsed[name] = args.slice(index).join(" ");
       } else {

@@ -19,7 +19,7 @@ export class CommandRegistry {
       ephemeral: user.config.RESPONSE_TYPE === "private",
     });
 
-    let tokens = [];
+    let tokens: Token[] = [];
 
     try {
       tokens = new Tokenizer(str).tokenize();
@@ -55,14 +55,13 @@ export class CommandRegistry {
       });
     }
 
-    const tokensArray = [];
+    const tokensArray: Token[][] = [];
 
     try {
       const rl = createInterface({ input: createReadStream(path) });
 
       for await (const line of rl) {
         if (line.length) {
-          console.log(line);
           tokensArray.push(new Tokenizer(line).tokenize());
         }
       }
@@ -134,7 +133,7 @@ export class CommandRegistry {
     }
 
     if (exit) {
-      exit.message = exits.map((e) => e.message).join("");
+      exit.message = exits.map((e) => e.message).join("\n");
       interaction.editReply(`\`\`\`\n${exit.message}\n\`\`\``);
     }
 

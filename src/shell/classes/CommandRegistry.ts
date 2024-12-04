@@ -1,8 +1,6 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import type { Command, Exit, Token } from "../../types.ts";
 import { Tokenizer } from "./Tokenizer.ts";
-import { createInterface } from "readline";
-import { createReadStream } from "fs";
 import { Arguments } from "./Arguments.ts";
 
 export class CommandRegistry {
@@ -12,41 +10,10 @@ export class CommandRegistry {
     this.commands = new Map();
   }
 
-  async execute(interaction: ChatInputCommandInteraction, str: string) {
-    const user = interaction.client.shell.users.get(interaction.user.id);
-
-    await interaction.deferReply({
-      ephemeral: user.config.RESPONSE_TYPE === "private",
-    });
-
-    let tokens: Token[] = [];
-
-    try {
-      tokens = new Tokenizer(str).tokenize();
-
-      // Replace "$" variables
-      const { env } = interaction.client.shell.users.get(interaction.user.id);
-      tokens = tokens.map((t) => {
-        const match = /\\?\$([A-Za-z_][A-Za-z0-9_]*)/g;
-
-        if (t.value.match(match)) {
-          for (const m of t.value.match(match)) {
-            if (!m.startsWith("\\") && env[m.slice(1)]) {
-              t.value = t.value.replace(m, env[m.slice(1)]);
-            }
-          }
-        }
-
-        return t;
-      });
-    } catch (e) {
-      throw new Error(`Errored while parsing:\n${e.message}`);
-    }
-
-    return await this.executeTokens(interaction, [tokens]);
-  }
-
-  async executeFile(interaction: ChatInputCommandInteraction, path: string) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    str: string | Buffer,
+  ) {
     const user = interaction.client.shell.users.get(interaction.user.id);
 
     if (!interaction.deferred) {
@@ -55,15 +22,19 @@ export class CommandRegistry {
       });
     }
 
-    const tokensArray: Token[][] = [];
+    let tokensArray: Token[][] = [];
 
     try {
-      const rl = createInterface({ input: createReadStream(path) });
+      if (str instanceof Buffer) {
+        const lines = Buffer.from(str).toString().split("\n");
 
-      for await (const line of rl) {
-        if (line.length) {
-          tokensArray.push(new Tokenizer(line).tokenize());
+        for await (const line of lines) {
+          if (line.length) {
+            tokensArray.push(new Tokenizer(line).tokenize());
+          }
         }
+      } else {
+        tokensArray = [new Tokenizer(str).tokenize()];
       }
 
       for (let tokens of tokensArray) {

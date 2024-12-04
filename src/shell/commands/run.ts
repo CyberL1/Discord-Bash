@@ -1,5 +1,5 @@
 import type { Command } from "../../types.ts";
-import { existsSync, statSync } from "fs";
+import { existsSync, readFileSync, statSync } from "fs";
 
 const command: Command = {
   name: "run",
@@ -21,10 +21,8 @@ const command: Command = {
       return { code: 1, message: "Path is a directory" };
     }
 
-    await interaction.client.shell.cmdRegistry.executeFile(
-      interaction,
-      realPath,
-    );
+    const buffer = readFileSync(realPath);
+    await interaction.client.shell.cmdRegistry.execute(interaction, buffer);
   },
 };
 

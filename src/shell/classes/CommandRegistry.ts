@@ -114,6 +114,16 @@ export class CommandRegistry {
             ? new Arguments(command).parse(tokens.slice(1).map((t) => t.value))
             : [];
 
+          if (typeof args === "string") {
+            exit = {
+              code: 2,
+              message: `${cmd.value}: Missing ${args} argument`,
+            };
+
+            exits.push(exit);
+            continue;
+          }
+
           exit = await command.run(interaction, args);
 
           if (exit) {

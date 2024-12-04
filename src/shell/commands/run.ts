@@ -4,7 +4,7 @@ import { existsSync, statSync } from "fs";
 const command: Command = {
   name: "run",
   description: "Runs a script file",
-  args: { path: { help: "Path to the file" } },
+  args: { path: { help: "Path to the file", required: true } },
 
   run: async (interaction, { path }) => {
     const { env } = interaction.client.shell.users.get(interaction.user.id);

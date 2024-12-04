@@ -5,7 +5,7 @@ const command: Command = {
   description: "Returns a given code",
   args: { code: { help: "The code to return" } },
 
-  run: (_imteraction, { code }) => {
+  run: (_imteraction, { args: { code } }) => {
     return { code: Number(code) || 0 };
   },
 };

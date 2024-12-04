@@ -6,7 +6,7 @@ const command: Command = {
   description: "Displays file content",
   args: { path: { help: "Path to file", required: true } },
 
-  run: async (interaction, { path }) => {
+  run: async (interaction, { args: { path } }) => {
     const { env } = interaction.client.shell.users.get(interaction.user.id);
 
     const realPath = interaction.client.shell.fs.from(

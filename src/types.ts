@@ -4,10 +4,11 @@ export interface Command {
   name: string;
   description: string;
   args?: Arguments;
+  flags?: Flags;
   superuserOnly?: boolean;
   run: (
     interaction: ChatInputCommandInteraction,
-    args: { [key: string]: string },
+    args: ArgumentsParsed,
   ) => Exit | Promise<Exit>;
 }
 
@@ -29,4 +30,18 @@ interface ArgumentOptions {
   help: string;
   infinite?: boolean;
   required?: boolean;
+}
+
+interface Flags {
+  [flag: string]: FlagOptions;
+}
+
+interface FlagOptions {
+  help: string;
+  type: "string" | "boolean";
+}
+
+export interface ArgumentsParsed {
+  flags: { [key: string]: string };
+  args: { [key: string]: string };
 }

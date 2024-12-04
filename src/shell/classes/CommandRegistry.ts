@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction } from "discord.js";
-import type { Command, Exit, Token } from "../../types.ts";
+import type { ArgumentsParsed, Command, Exit, Token } from "../../types.ts";
 import { Tokenizer } from "./Tokenizer.ts";
 import { Arguments } from "./Arguments.ts";
 
@@ -81,9 +81,8 @@ export class CommandRegistry {
             continue;
           }
 
-          const args = command.args
-            ? new Arguments(command).parse(tokens.slice(1).map((t) => t.value))
-            : [];
+          const args = tokens.slice(1).map((t) => t.value);
+          const argsParsed = new Arguments(command).parse(args);
 
           if (typeof args === "string") {
             exit = {
@@ -95,7 +94,7 @@ export class CommandRegistry {
             continue;
           }
 
-          exit = await command.run(interaction, args);
+          exit = await command.run(interaction, argsParsed as ArgumentsParsed);
 
           if (exit) {
             if (exit.code != 0 && exit.message) {

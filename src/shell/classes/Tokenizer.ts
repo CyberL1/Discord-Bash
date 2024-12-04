@@ -19,11 +19,13 @@ export class Tokenizer {
         this.current += char;
       }
 
-      if (isCommand && char === " ") {
-        this.token("cmd");
-        isCommand = false;
-      } else if (char === " ") {
-        this.token("str");
+      if (this.current.length) {
+        if (isCommand && char === " ") {
+          this.token("cmd");
+          isCommand = false;
+        } else if (char === " ") {
+          this.token("str");
+        }
       }
     }
 

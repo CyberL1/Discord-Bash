@@ -45,8 +45,8 @@ export class CommandRegistry {
 
           if (t.value.match(match)) {
             for (const m of t.value.match(match)) {
-              if (!m.startsWith("\\") && env[m.slice(1)]) {
-                t.value = t.value.replace(m, env[m.slice(1)]);
+              if (!m.startsWith("\\")) {
+                t.value = t.value.replace(m, env[m.slice(1)] ?? "");
               }
             }
           }

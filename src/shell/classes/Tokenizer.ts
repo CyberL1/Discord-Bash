@@ -17,9 +17,13 @@ export class Tokenizer {
     for (const char of this.str) {
       if (char != " ") {
         this.current += char;
-      } else if (this.current.length > 0) {
-        this.token(isCommand ? "cmd" : "str");
+      }
+
+      if (isCommand && char === " ") {
+        this.token("cmd");
         isCommand = false;
+      } else if (char === " ") {
+        this.token("str");
       }
     }
 

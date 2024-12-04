@@ -17,13 +17,9 @@ export class Tokenizer {
     for (const char of this.str) {
       if (char != " ") {
         this.current += char;
-      }
-
-      if (isCommand && char === " ") {
-        this.token("cmd");
+      } else if (this.current.length > 0) {
+        this.token(isCommand ? "cmd" : "str");
         isCommand = false;
-      } else if (char === " ") {
-        this.token("str");
       }
     }
 
@@ -35,7 +31,7 @@ export class Tokenizer {
     return this.tokens;
   }
 
-  token(type) {
+  token(type: string) {
     this.tokens.push({ type, value: this.current });
     this.current = "";
   }

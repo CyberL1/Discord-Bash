@@ -14,15 +14,19 @@ const command: Command = {
     );
 
     if (!existsSync(realPath)) {
-      return { code: 1, message: "Path does not exist" };
+      console.log("Path does not exist");
+      return 1;
     }
 
     if (statSync(realPath).isDirectory()) {
-      return { code: 1, message: "Path is a directory" };
+      console.log("Path is a directory");
+      return 1;
     }
 
     const fileContents = readFileSync(realPath, { encoding: "utf-8" });
-    return { code: 0, message: fileContents };
+
+    console.log(fileContents);
+    return 0;
   },
 };
 

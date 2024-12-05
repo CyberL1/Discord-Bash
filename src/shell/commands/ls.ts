@@ -20,11 +20,13 @@ const command: Command = {
     const realPath = interaction.client.shell.fs.from(location);
 
     if (!existsSync(realPath)) {
-      return { code: 1, message: "Path does not exist" };
+      console.log("Path does not exist");
+      return 1;
     }
 
     if (!statSync(realPath).isDirectory()) {
-      return { code: 1, message: "Path is not a directory" };
+      console.log("Path is not a directory");
+      return 1;
     }
 
     let dirContents = readdirSync(realPath);
@@ -33,7 +35,8 @@ const command: Command = {
       dirContents = dirContents.filter((c) => !c.startsWith("."));
     }
 
-    return { code: 0, message: dirContents.join(" ") || "\u200b" };
+    console.log(dirContents.join(" ") || "\u200b");
+    return 0;
   },
 };
 

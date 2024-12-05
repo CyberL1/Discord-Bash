@@ -6,7 +6,7 @@ const command: Command = {
   args: { code: { help: "The code to return" } },
 
   run: (_imteraction, { args: { code } }) => {
-    return { code: Number(code) || 0 };
+    return Number(code) || 0;
   },
 };
 

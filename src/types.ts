@@ -9,17 +9,12 @@ export interface Command {
   run: (
     interaction: ChatInputCommandInteraction,
     args: ArgumentsParsed,
-  ) => Exit | Promise<Exit>;
+  ) => number | Promise<number>;
 }
 
 export interface Token {
   type: string;
   value: string;
-}
-
-export interface Exit {
-  code: number;
-  message?: string;
 }
 
 interface Arguments {
@@ -44,4 +39,9 @@ interface FlagOptions {
 export interface ArgumentsParsed {
   flags: { [key: string]: string };
   args: { [key: string]: string };
+}
+
+export interface Process {
+  pid: number;
+  name: string;
 }

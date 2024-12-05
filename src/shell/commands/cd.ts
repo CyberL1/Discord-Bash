@@ -17,17 +17,20 @@ const command: Command = {
     const realPath = interaction.client.shell.fs.from(path);
 
     if (!existsSync(realPath)) {
-      return { code: 1, message: "Path does not exist" };
+      console.log("Path does not exist");
+      return 1;
     }
 
     if (!statSync(realPath).isDirectory()) {
-      return { code: 1, message: "Path is not a directory" };
+      console.log("Path is not a directory");
+      return 1;
     }
 
     interaction.client.shell.users.setDirectory(interaction.user.id, path);
     const { PWD } = interaction.client.shell.users.get(interaction.user.id).env;
 
-    return { code: 0, message: `You're now in: ${PWD}` };
+    console.log(`You're now in: ${PWD}`);
+    return 0;
   },
 };
 

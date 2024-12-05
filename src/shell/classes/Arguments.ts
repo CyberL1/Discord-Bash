@@ -8,6 +8,10 @@ export class Arguments {
   }
 
   parse(args: string[]) {
+    if (!this.command) {
+      return;
+    }
+
     const flagsParsed = {};
     const flags = args.filter((a) => a.startsWith("-"));
 

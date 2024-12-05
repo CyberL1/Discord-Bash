@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction } from "discord.js";
-import type { ArgumentsParsed, Command, Exit, Token } from "../../types.ts";
+import type { ArgumentsParsed, Command, Token } from "../../types.ts";
 import { Tokenizer } from "./Tokenizer.ts";
 import { Arguments } from "./Arguments.ts";
 
@@ -10,10 +10,7 @@ export class CommandRegistry {
     this.commands = new Map();
   }
 
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    str: string | Buffer,
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, str: string) {
     const user = interaction.client.shell.users.get(interaction.user.id);
 
     if (!interaction.deferred) {
@@ -25,17 +22,7 @@ export class CommandRegistry {
     let tokensArray: Token[][] = [];
 
     try {
-      if (str instanceof Buffer) {
-        const lines = Buffer.from(str).toString().split("\n");
-
-        for await (const line of lines) {
-          if (line.length) {
-            tokensArray.push(new Tokenizer(line).tokenize());
-          }
-        }
-      } else {
-        tokensArray = [new Tokenizer(str).tokenize()];
-      }
+      tokensArray = [new Tokenizer(str).tokenize()];
 
       for (let tokens of tokensArray) {
         // Replace "$" variables
@@ -65,8 +52,7 @@ export class CommandRegistry {
     interaction: ChatInputCommandInteraction,
     tokensArray: Token[][],
   ) {
-    const exits = [] as Exit[];
-    let exit = {} as Exit;
+    let exit: number = 0;
 
     for (const tokens of tokensArray) {
       const cmds = tokens.filter((t) => t.type === "cmd");
@@ -76,8 +62,8 @@ export class CommandRegistry {
           const command = this.commands.get(cmd.value);
 
           if (!command) {
-            exit = { code: 127, message: `${cmd.value}: command not found` };
-            exits.push(exit);
+            console.log(`${cmd.value}: command not found`);
+            exit = 127;
             continue;
           }
 
@@ -85,36 +71,19 @@ export class CommandRegistry {
           const argsParsed = new Arguments(command).parse(args);
 
           if (typeof args === "string") {
-            exit = {
-              code: 2,
-              message: `${cmd.value}: Missing ${args} argument`,
-            };
-
-            exits.push(exit);
+            console.log(`Missing ${args} argument`);
+            exit = 2;
             continue;
           }
 
           exit = await command.run(interaction, argsParsed as ArgumentsParsed);
-
-          if (exit) {
-            if (exit.code != 0 && exit.message) {
-              exit.message = `${cmd.value}: ${exit.message}`;
-            }
-
-            exits.push(exit);
-          }
         } catch (e) {
-          exit.code = 1;
+          exit = 1;
 
-          console.error(`Exited with code: ${exit.code}`);
+          console.error(`Exited with code: ${exit}`);
           throw new Error(`Errored while running:\n${e.message}`);
         }
       }
-    }
-
-    if (exit) {
-      exit.message = exits.map((e) => e.message).join("\n");
-      interaction.editReply(`\`\`\`\n${exit.message}\n\`\`\``);
     }
 
     return exit;

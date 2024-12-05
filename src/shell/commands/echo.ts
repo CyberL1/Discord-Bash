@@ -6,7 +6,8 @@ const command: Command = {
   args: { text: { help: "The text to display", infinite: true } },
 
   run: (_interaction, { args: { text } }) => {
-    return { code: 0, message: text };
+    console.log(text);
+    return 0;
   },
 };
 

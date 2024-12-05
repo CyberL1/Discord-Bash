@@ -1,5 +1,6 @@
 import type { Command } from "../../types.ts";
 import { existsSync, readFileSync, statSync } from "fs";
+import { Process } from "../classes/Process.ts";
 
 const command: Command = {
   name: "run",
@@ -14,15 +15,26 @@ const command: Command = {
     );
 
     if (!existsSync(realPath)) {
-      return { code: 1, message: "Path does not exist" };
+      console.log("Path does not exist");
+      return 1;
     }
 
     if (statSync(realPath).isDirectory()) {
-      return { code: 1, message: "Path is a directory" };
+      console.log("Path is a directory");
+      return 1;
     }
 
-    const buffer = readFileSync(realPath);
-    await interaction.client.shell.cmdRegistry.execute(interaction, buffer);
+    const lines = readFileSync(realPath).toString().split("\n");
+
+    for await (const line of lines) {
+      if (line.length) {
+        const [name] = line.split(" ");
+
+        new Process(interaction.client.shell, { name }).run(interaction);
+      }
+    }
+
+    return 0;
   },
 };
 

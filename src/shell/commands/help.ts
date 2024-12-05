@@ -3,7 +3,7 @@ import type { Command } from "../../types.ts";
 const command: Command = {
   name: "help",
   description: "Displays commmands",
-  
+
   run: (interaction) => {
     const commands = [];
 
@@ -11,7 +11,8 @@ const command: Command = {
       commands.push(key);
     }
 
-    return { code: 0, message: commands.join("\n") };
+    console.log(commands.join("\n"));
+    return 0;
   },
 };
 

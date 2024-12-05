@@ -7,7 +7,8 @@ const command: Command = {
   run: (interaction) => {
     const user = interaction.client.shell.users.get(interaction.user.id);
 
-    return { code: 0, message: user.env.PWD };
+    console.log(user.env.PWD);
+    return 0;
   },
 };
 

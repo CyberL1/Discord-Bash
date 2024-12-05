@@ -4,6 +4,8 @@ import { Filesystem } from "./Filesystem.ts";
 import { Users } from "./Users.ts";
 import { CommandRegistry } from "./CommandRegistry.ts";
 import { ChatInputCommandInteraction } from "discord.js";
+import { Process } from "./Process.ts";
+import type { Process as ProcessType } from "../../types.ts";
 
 export class Shell extends EventEmitter {
   cmdRegistry: CommandRegistry;
@@ -26,9 +28,10 @@ export class Shell extends EventEmitter {
       );
     }
 
-    this.cmdRegistry.execute(interaction, command);
+    new Process(this, { name: command }).run(interaction);
   }
 
   fs = new Filesystem();
   users = new Users(this);
+  processes: ProcessType[] = [];
 }

@@ -2,7 +2,6 @@ import type { Process as ProcessType } from "../../types.ts";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { Shell } from "./Shell.ts";
 
-const originalWrite = process.stdout.write;
 let PID: number = 0;
 
 export class Process {
@@ -49,8 +48,6 @@ export class Process {
   }
 
   remove() {
-    process.stdout.write = process.stderr.write = originalWrite;
-
     this.shell.processes = this.shell.processes.filter(
       (p) => p.pid != this.process.pid,
     );

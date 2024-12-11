@@ -24,15 +24,8 @@ const command: Command = {
       return 1;
     }
 
-    const lines = readFileSync(realPath).toString().split("\n");
-
-    for await (const line of lines) {
-      if (line.length) {
-        const [name] = line.split(" ");
-
-        new Process(interaction.client.shell, { name }).run(interaction);
-      }
-    }
+    const name = readFileSync(realPath).toString();
+    new Process(interaction.client.shell, { name }).run(interaction);
 
     return 0;
   },

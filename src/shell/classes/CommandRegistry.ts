@@ -22,7 +22,8 @@ export class CommandRegistry {
     let tokensArray: Token[][] = [];
 
     try {
-      tokensArray = [new Tokenizer(str).tokenize()];
+      const lines = str.split("\n").filter((l) => l.length > 0);
+      tokensArray = lines.map((line) => new Tokenizer(line).tokenize());
 
       for (let tokens of tokensArray) {
         // Replace "$" variables

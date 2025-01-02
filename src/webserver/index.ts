@@ -18,7 +18,7 @@ app.get("/", (_req, reply: FastifyReply) => {
   const files = readdirSync(filesDirPath);
 
   reply.header("content-type", "text/html");
-  return files.map((file) => `<a href="/${file}">${file}</a>`).join("\n");
+  return files.map((file) => `<a href="/${file}">${file}</a>`).join("<br>");
 });
 
 app.get(

@@ -60,12 +60,11 @@ export class Process {
       interaction.editReply(
         `Output was too large for discord, find it here instead: ${process.env.WEBSERVER_URL}/${fileName}`,
       );
-      return;
+    } else {
+      interaction.editReply(outputForDiscord);
     }
 
-    interaction.editReply(outputForDiscord);
     this.remove();
-
     return exit;
   }
 

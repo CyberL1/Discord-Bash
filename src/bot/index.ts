@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "../webserver/index.ts";
 import { Client, Collection } from "discord.js";
 import { readdirSync } from "fs";
 

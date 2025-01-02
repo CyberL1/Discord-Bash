@@ -1,6 +1,8 @@
 import type { Process as ProcessType } from "../../types.ts";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { Shell } from "./Shell.ts";
+import { writeFileSync } from "fs";
+import { join } from "path";
 
 let PID: number = 0;
 
@@ -41,7 +43,27 @@ export class Process {
       this.process.name,
     );
 
-    interaction.editReply(`\`\`\`sh\n${output}\`\`\``);
+    const outputForDiscord = `\`\`\`sh\n${output}\`\`\``;
+
+    if (outputForDiscord.length > 2000) {
+      const filesRoot = join(
+        import.meta.dirname,
+        "..",
+        "..",
+        "webserver",
+        "files",
+      );
+
+      const fileName = Date.now().toString();
+      writeFileSync(join(filesRoot, fileName), output);
+
+      interaction.editReply(
+        `Output was too large for discord, find it here instead: ${process.env.WEBSERVER_URL}/${fileName}`,
+      );
+      return;
+    }
+
+    interaction.editReply(outputForDiscord);
     this.remove();
 
     return exit;

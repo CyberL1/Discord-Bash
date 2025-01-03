@@ -8,6 +8,11 @@
     "start": "node --experimental-strip-types .",
     "deploy": "node --experimental-strip-types src/bot/deploy.ts"
   },
+  "imports": {
+    "#bot/*": "./src/bot/*",
+    "#shell/*": "./src/shell/*",
+    "#webserver/*": "./src/webserver/*"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CyberL1/Discord-Bash.git"

@@ -1,4 +1,4 @@
-import type { Command } from "../../types.ts";
+import type { Command } from "#shell/types.ts";
 
 const command: Command = {
   name: "exit",

@@ -1,4 +1,4 @@
-import type { Command } from "../../types.ts";
+import type { Command } from "#shell/types.ts";
 
 export class Arguments {
   private command: Command;

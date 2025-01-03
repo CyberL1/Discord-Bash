@@ -1,4 +1,4 @@
-import type { Token } from "../../types.ts";
+import type { Token } from "#shell/types.ts";
 
 export class Tokenizer {
   str: string;

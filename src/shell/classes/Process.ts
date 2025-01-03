@@ -1,4 +1,4 @@
-import type { Process as ProcessType } from "../../types.ts";
+import type { Process as ProcessType } from "#shell/types.ts";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { Shell } from "./Shell.ts";
 import { writeFileSync } from "fs";

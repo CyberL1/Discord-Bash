@@ -1,4 +1,4 @@
-import type { Command } from "../../types.ts";
+import type { Command } from "#shell/types.ts";
 import { existsSync, readdirSync, statSync } from "fs";
 
 const command: Command = {

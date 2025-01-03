@@ -6,6 +6,17 @@
     "typeRoots": [
       "globals.d.ts"
     ],
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "#bot/*": [
+        "./src/bot/*"
+      ],
+      "#shell/*": [
+        "./src/shell/*"
+      ],
+      "#webserver/*": [
+        "./src/webserver/*"
+      ]
+    }
   }
 }

@@ -1,6 +1,6 @@
-import type { Command } from "../../types.ts";
+import type { Command } from "#shell/types.ts";
 import { existsSync, readFileSync, statSync } from "fs";
-import { Process } from "../classes/Process.ts";
+import { Process } from "#shell/classes/Process.ts";
 
 const command: Command = {
   name: "run",

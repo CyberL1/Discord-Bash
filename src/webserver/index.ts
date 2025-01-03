@@ -32,6 +32,8 @@ app.get(
     }
 
     reply.header("content-type", "text/plain");
+    reply.header("x-content-type-options", "nosniff");
+
     return readFileSync(filePath);
   },
 );

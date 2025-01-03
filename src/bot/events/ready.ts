@@ -6,7 +6,7 @@ export const run = async (client: Client) => {
   if ((await client.application.commands.fetch()).size == 0) {
     const commandFiles = readdirSync(
       `${import.meta.dirname}/../commands`,
-    ).filter((f) => f.endsWith(".js"));
+    ).filter((f) => f.endsWith(".ts"));
 
     const commands = [];
 

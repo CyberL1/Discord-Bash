@@ -5,7 +5,6 @@ export interface Command {
   description: string;
   args?: Arguments;
   flags?: Flags;
-  superuserOnly?: boolean;
   run: (
     interaction: ChatInputCommandInteraction,
     args: ArgumentsParsed,

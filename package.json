@@ -1,20 +1,35 @@
 {
   "name": "discord-bash",
-  "version": "2.0.0",
-  "description": "Attempt to import bash shell into Discord",
-  "main": "index.js",
+  "version": "3.0.0",
+  "description": "A bash shell for Discord",
+  "main": "src/bot/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types .",
+    "deploy": "node --experimental-strip-types src/bot/deploy.ts"
+  },
+  "imports": {
+    "#bot/*": "./src/bot/*",
+    "#shell/*": "./src/shell/*",
+    "#webserver/*": "./src/webserver/*"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cyberl1/discord-bash.git"
+    "url": "git+https://github.com/CyberL1/Discord-Bash.git"
   },
-  "author": "Cyber",
-  "license": "ISC",
+  "author": "CyberL1",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cyberl1/discord-bash/issues"
+    "url": "https://github.com/CyberL1/Discord-Bash/issues"
   },
-  "homepage": "https://github.com/cyberl1/discord-bash#readme",
+  "homepage": "https://github.com/CyberL1/Discord-Bash#readme",
   "dependencies": {
-    "argparse": "^2.0.1",
-    "discord.js": "^12.5.3"
+    "decompress": "^4.2.1",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^5.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.1"
   }
 }

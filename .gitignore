@@ -1,5 +1,4 @@
-node_modules/
-settings.json
-sudoers.txt
-packages/
-home/
+node_modules
+.env
+filesystem
+src/webserver/files

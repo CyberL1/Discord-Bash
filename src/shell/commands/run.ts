@@ -26,8 +26,6 @@ const command: Command = {
 
     const name = readFileSync(realPath).toString();
     new Process(interaction.client.shell, { name }).run(interaction);
-
-    return 0;
   },
 };
 

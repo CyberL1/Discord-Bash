@@ -33,9 +33,9 @@ export class Process {
   async run(interaction: ChatInputCommandInteraction) {
     let output = "";
 
-    // @ts-ignore
     process.stdout.write = process.stderr.write = (message: string) => {
       output += message;
+      return true;
     };
 
     const exit = await interaction.client.shell.cmdRegistry.execute(

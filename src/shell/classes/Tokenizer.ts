@@ -13,18 +13,25 @@ export class Tokenizer {
 
   tokenize() {
     let isCommand = true;
+    let isComment = false;
 
     for (const char of this.str) {
-      if (char != " ") {
-        this.current += char;
+      if (char === "#") {
+        isComment = true;
       }
 
-      if (this.current.length) {
-        if (isCommand && char === " ") {
-          this.token("cmd");
-          isCommand = false;
-        } else if (char === " ") {
-          this.token("str");
+      if (!isComment) {
+        if (char != " ") {
+          this.current += char;
+        }
+
+        if (this.current.length) {
+          if (isCommand && char === " ") {
+            this.token("cmd");
+            isCommand = false;
+          } else if (char === " ") {
+            this.token("str");
+          }
         }
       }
     }

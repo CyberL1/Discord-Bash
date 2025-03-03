@@ -43,25 +43,27 @@ export class Process {
       this.process.name,
     );
 
-    const outputForDiscord = `\`\`\`sh\n${output}\`\`\``;
+    if (exit != undefined) {
+      const outputForDiscord = `\`\`\`sh\n${output}\`\`\``;
 
-    if (outputForDiscord.length > 2000) {
-      const filesRoot = join(
-        import.meta.dirname,
-        "..",
-        "..",
-        "webserver",
-        "files",
-      );
+      if (outputForDiscord.length > 2000) {
+        const filesRoot = join(
+          import.meta.dirname,
+          "..",
+          "..",
+          "webserver",
+          "files",
+        );
 
-      const fileName = Date.now().toString();
-      writeFileSync(join(filesRoot, fileName), output);
+        const fileName = Date.now().toString();
+        writeFileSync(join(filesRoot, fileName), output);
 
-      interaction.editReply(
-        `Output was too large for discord, find it here instead: ${process.env.WEBSERVER_URL}/${fileName}`,
-      );
-    } else {
-      interaction.editReply(outputForDiscord);
+        interaction.editReply(
+          `Output was too large for discord, find it here instead: ${process.env.WEBSERVER_URL}/${fileName}`,
+        );
+      } else {
+        interaction.editReply(outputForDiscord);
+      }
     }
 
     this.remove();

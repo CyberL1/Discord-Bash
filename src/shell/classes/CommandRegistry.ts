@@ -15,7 +15,7 @@ export class CommandRegistry {
 
     if (!interaction.deferred) {
       await interaction.deferReply({
-        ephemeral: user.config.RESPONSE_TYPE === "private",
+        flags: user.config.RESPONSE_TYPE === "private" ? 64 : undefined,
       });
     }
 

@@ -71,8 +71,8 @@ export class CommandRegistry {
           const args = tokens.slice(1).map((t) => t.value);
           const argsParsed = new Arguments(command).parse(args);
 
-          if (typeof args === "string") {
-            console.log(`Missing ${args} argument`);
+          if (typeof argsParsed === "string") {
+            console.log(`Missing ${argsParsed} argument`);
             exit = 2;
             continue;
           }

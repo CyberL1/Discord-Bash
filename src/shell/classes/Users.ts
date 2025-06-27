@@ -40,6 +40,7 @@ export class Users {
       config: dotenv.config({
         override: true,
         path: this.shell.fs.from(`/home/${userId}/.shellcfg`),
+        quiet: true,
       }).parsed,
       env: {
         HOME: `/home/${userId}`,

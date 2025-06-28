@@ -27,14 +27,13 @@ export class CommandRegistry {
 
       for (let tokens of tokensArray) {
         // Replace "$" variables
-        const { env } = interaction.client.shell.users.get(interaction.user.id);
         tokens = tokens.map((t) => {
           const match = /\\?\$([A-Za-z_][A-Za-z0-9_]*)/g;
 
           if (t.value.match(match)) {
             for (const m of t.value.match(match)) {
               if (!m.startsWith("\\")) {
-                t.value = t.value.replace(m, env[m.slice(1)] ?? "");
+                t.value = t.value.replace(m, user.env[m.slice(1)] ?? "");
               }
             }
           }

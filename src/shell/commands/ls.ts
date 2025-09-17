@@ -1,5 +1,5 @@
-import type { Command } from "#shell/types.ts";
 import { existsSync, readdirSync, statSync } from "fs";
+import type { Command } from "#shell/types.ts";
 
 const command: Command = {
   name: "ls",

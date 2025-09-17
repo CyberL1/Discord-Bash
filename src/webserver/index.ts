@@ -1,6 +1,6 @@
-import fastify, { type FastifyReply, type FastifyRequest } from "fastify";
-import { existsSync, mkdirSync, readdirSync, readFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync } from "fs";
 import { join } from "path";
+import fastify, { type FastifyReply, type FastifyRequest } from "fastify";
 
 const filesDirPath = join(import.meta.dirname, "files");
 

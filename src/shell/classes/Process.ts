@@ -1,8 +1,8 @@
-import type { Process as ProcessType } from "#shell/types.ts";
-import type { ChatInputCommandInteraction } from "discord.js";
-import { Shell } from "./Shell.ts";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import type { ChatInputCommandInteraction } from "discord.js";
+import type { Process as ProcessType } from "#shell/types.ts";
+import { Shell } from "./Shell.ts";
 
 let PID: number = 0;
 

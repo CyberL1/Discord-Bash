@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import type { ArgumentsParsed, Command, Token } from "#shell/types.ts";
-import { Tokenizer } from "./Tokenizer.ts";
 import { Arguments } from "./Arguments.ts";
+import { Tokenizer } from "./Tokenizer.ts";
 
 export class CommandRegistry {
   commands: Map<string, Command>;

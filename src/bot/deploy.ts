@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { REST, Routes } from "discord.js";
 import { readdir } from "node:fs/promises";
+import { REST, Routes } from "discord.js";
 
 const commands = [];
 const commandFiles = (

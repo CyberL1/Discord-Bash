@@ -1,7 +1,7 @@
 import { existsSync, readdirSync } from "fs";
 import decompress from "decompress";
-import { Shell } from "./classes/Shell.ts";
 import { Process } from "./classes/Process.ts";
+import { Shell } from "./classes/Shell.ts";
 
 export default async (shell: Shell) => {
   const eventFiles = readdirSync(`${import.meta.dirname}/events`).filter((f) =>

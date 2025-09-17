@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
-import { Shell } from "../../shell/classes/Shell.ts";
 import { Client } from "discord.js";
+import { Shell } from "../../shell/classes/Shell.ts";
 
 export const run = async (client: Client) => {
   if ((await client.application.commands.fetch()).size == 0) {
